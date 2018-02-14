@@ -3,12 +3,14 @@ FROM alpine:3.7
 ENV COMPOSER_HOME /composer
 ENV PATH $PATH:${COMPOSER_HOME}/vendor/bin
 ENV PHPUNIT_VERSION 7.0.0
+ENV TERMINUS_USER_HOME ${COMPOSER_HOME}
 
 RUN apk update && apk add --no-cache \
     curl \
     git \
     php7 \
     php7-ctype \
+    php7-curl \
     php7-dom \
     php7-iconv \
     php7-json \
@@ -26,10 +28,16 @@ RUN apk update && apk add --no-cache \
 
 WORKDIR /composer
 
-RUN composer require drupal/coder \
+# Add symfony/yaml ^3.4.0 to resolve conflict in terminus
+RUN composer require symfony/yaml ^3.4.0 \
+    && composer require drupal/coder \
     && phpcs --config-set installed_paths ${COMPOSER_HOME}/vendor/drupal/coder/coder_sniffer \
     && composer require phpmd/phpmd \
-    && composer require phpunit/phpunit ^${PHPUNIT_VERSION}
+    && composer require phpunit/phpunit ^${PHPUNIT_VERSION} \
+    && composer require pantheon-systems/terminus \
+    && mkdir -p ${COMPOSER_HOME}/.terminus/plugins \
+    && composer create-project -n -d ${COMPOSER_HOME}/.terminus/plugins pantheon-systems/terminus-build-tools-plugin:~1 \
+    && chmod -R 777 ${COMPOSER_HOME}/.terminus
 
 WORKDIR /app
 
