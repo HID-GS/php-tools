@@ -25,6 +25,7 @@ RUN apk update && apk add --no-cache \
     php7-xml \
     php7-xmlwriter \
     php7-zlib \
+    rsync \
     && mkdir /composer \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
