@@ -11,6 +11,6 @@ if [ -n "$GITHUB_TOKEN" ] ; then
 fi
 
 # Set up our default git config settings.
-git config --global user.email "$GIT_EMAIL"
-git config --global user.name "Jenkins"
+git config --global user.email "$GIT_AUTHOR_NAME"
+git config --global user.name "$GIT_AUTHOR_EMAIL"
 git config --global core.fileMode false
