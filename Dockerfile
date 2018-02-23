@@ -35,6 +35,7 @@ WORKDIR ${WORKING_DIR}
 
 # Add symfony/yaml ^3.4.0 to resolve conflict in terminus
 RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
+    && composer -n global require -n hirak/prestissimo:^0.3 \
     && composer -n require symfony/yaml ^3.4.0 \
     && composer -n require drupal/coder \
     && phpcs --config-set installed_paths ${WORKING_DIR}/vendor/drupal/coder/coder_sniffer \
