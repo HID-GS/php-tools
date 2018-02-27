@@ -8,6 +8,7 @@ ENV TERMINUS_PLUGINS_DIR ${WORKING_DIR}/.terminus/plugins
 ENV TERMINUS_CACHE_DIR ${WORKING_DIR}/.terminus/cache
 
 RUN apk update && apk add --no-cache \
+    bash \
     curl \
     git \
     openssh-client \
@@ -44,6 +45,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
     && composer -n require pantheon-systems/terminus \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
+    && touch ${HOME}/.bash_profile \
+    && curl --silent --show-error https://platform.sh/cli/installer | php \
     && chmod +x /scripts/build-tools-ci.sh
 
 WORKDIR /app
