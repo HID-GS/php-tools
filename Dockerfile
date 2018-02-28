@@ -6,6 +6,7 @@ ENV PHPUNIT_VERSION 4.8.0
 ENV DRUSH_VERSION 8.0.0
 ENV TERMINUS_PLUGINS_DIR ${WORKING_DIR}/.terminus/plugins
 ENV TERMINUS_CACHE_DIR ${WORKING_DIR}/.terminus/cache
+ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 
 RUN apk update && apk add --no-cache \
     bash \
@@ -21,7 +22,12 @@ RUN apk update && apk add --no-cache \
     php7-mbstring \
     php7-openssl \
     php7-phar \
+    php7-pdo \
+    php7-pdo_mysql \
+    php7-pdo_sqlite \
+    php7-session \
     php7-simplexml \
+    php7-sqlite3 \
     php7-tokenizer \
     php7-xml \
     php7-xmlwriter \
