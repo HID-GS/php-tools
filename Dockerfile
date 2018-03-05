@@ -9,7 +9,6 @@ ENV TERMINUS_CACHE_DIR ${WORKING_DIR}/.terminus/cache
 ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 
 RUN apk update && apk add --no-cache \
-    bash \
     curl \
     git \
     openssh-client \
