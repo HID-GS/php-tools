@@ -53,6 +53,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
     && touch ${HOME}/.bash_profile \
     && curl --silent --show-error https://platform.sh/cli/installer | php \
+    && mv ${HOME}/.platformsh ${WORKING_DIR} \
+    && ln -s ${WORKING_DIR}/.platformsh/bin/platform /usr/local/bin/platform \
     && chmod +x /scripts/build-tools-ci.sh
 
 WORKDIR /app
