@@ -1,11 +1,9 @@
 FROM alpine:3.7
 
-ENV WORKING_DIR /usr/local/share
-ENV PATH $PATH:${WORKING_DIR}/vendor/bin
 ENV PHPUNIT_VERSION 4.8.0
 ENV DRUSH_VERSION 8.0.0
-ENV TERMINUS_PLUGINS_DIR ${WORKING_DIR}/.terminus/plugins
-ENV TERMINUS_CACHE_DIR ${WORKING_DIR}/.terminus/cache
+ENV TERMINUS_PLUGINS_DIR /tools/terminus/plugins
+ENV TERMINUS_CACHE_DIR /tools/terminus/cache
 ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 
 RUN apk update && apk add --no-cache \
@@ -39,23 +37,31 @@ RUN apk update && apk add --no-cache \
 
 COPY ./build-tools-ci.sh /scripts/
 
-WORKDIR ${WORKING_DIR}
-
-# Add symfony/yaml ^3.4.0 to resolve conflict in terminus
 RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer -n global require -n hirak/prestissimo:^0.3 \
-    && composer -n require symfony/yaml ^3.4.0 \
-    && composer -n require drupal/coder \
-    && phpcs --config-set installed_paths ${WORKING_DIR}/vendor/drupal/coder/coder_sniffer \
-    && composer -n require phpmd/phpmd \
+    && mkdir -p /tools/drupal \
+    && cd /tools/drupal \
     && composer -n require drush/drush ^${DRUSH_VERSION} \
+    && composer -n require drupal/coder \
+    && /tools/drupal/vendor/bin/phpcs --config-set installed_paths /tools/drupal/vendor/drupal/coder/coder_sniffer \
+    && mkdir -p /tools/php \
+    && cd /tools/php \
+    && composer -n require phpmd/phpmd \
     && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
+    && mkdir -p /tools/terminus \
+    && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
+    && ls /tools/ | while read tool; do \
+         ls /tools/$tool/vendor/bin/ | while read binary; do \
+           rm -f /usr/local/bin/$binary; \
+           ln -s /tools/$tool/vendor/bin/$binary /usr/local/bin; \
+         done; \
+       done \
     && touch ${HOME}/.bash_profile \
     && curl --silent --show-error https://platform.sh/cli/installer | php \
-    && mv ${HOME}/.platformsh ${WORKING_DIR} \
-    && ln -s ${WORKING_DIR}/.platformsh/bin/platform /usr/local/bin/platform \
+    && mv ${HOME}/.platformsh /tools/platformsh \
+    && ln -s /tools/platformsh/bin/platform /usr/local/bin \
     && chmod +x /scripts/build-tools-ci.sh
 
 WORKDIR /app
