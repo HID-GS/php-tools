@@ -78,6 +78,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer require codeception/codeception \
     && apk del .build-deps
 
+COPY phpcs-rules/DrupalAll-ruleset.xml /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll/ruleset.xml
+
 RUN logfile="/version.txt" \
     && > $logfile \
     && php --version | sed -ne 's/^\(PHP [^ ]\+\) .*/\1/gp' >> $logfile \
@@ -95,7 +97,7 @@ RUN logfile="/version.txt" \
     && /tools/phpdocumentor/vendor/bin/phpdoc --version >> $logfile \
     && /tools/codeception/vendor/bin/codecept --version >> $logfile \
     && terminus --version >> $logfile \
-    && platform --version >> $logfile \
+    && platform --version >> $logfile
 
 WORKDIR /app
 
