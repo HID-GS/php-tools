@@ -67,6 +67,25 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && ln -s /tools/platformsh/bin/platform /usr/local/bin \
     && chmod +x /scripts/build-tools-ci.sh
 
+RUN logfile="/version.txt" \
+    && > $logfile \
+    && php --version | sed -ne 's/^\(PHP [^ ]\+\) .*/\1/gp' >> $logfile \
+    && pecl list | tail -n +4 >> $logfile \
+    && composer --version >> $logfile \
+    & --version --version  & composer global show >> $logfile \
+    && /tools/drupal/vendor/bin/drush --version >> $logfile \
+    && /tools/drupal/vendor/bin/phpcs --version >> $logfile \
+    && /tools/drupal/vendor/bin/phpcs -i >> $logfile \
+    && composer -d/tools/drupalconsole show | grep drupal | head -n 1 >> $logfile \
+    && /tools/php/vendor/bin/phpmd --version >> $logfile \
+    && /tools/php/vendor/bin/phing -v >> $logfile \
+    && /tools/php/vendor/bin/phpunit --version >> $logfile \
+    && /tools/php/vendor/bin/phpcpd --version >> $logfile \
+    && /tools/phpdocumentor/vendor/bin/phpdoc --version >> $logfile \
+    && /tools/codeception/vendor/bin/codecept --version >> $logfile \
+    && terminus --version >> $logfile \
+    && platform --version >> $logfile \
+
 WORKDIR /app
 
 CMD ["phpcs", "--standard=Drupal,DrupalPractice", "."]
