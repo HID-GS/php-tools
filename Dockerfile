@@ -51,6 +51,9 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && cd /tools/php \
     && composer -n require phpmd/phpmd \
     && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
+    && composer -n require phpunit/php-code-coverage \
+    && composer -n require sebastian/phpcpd \
+    && composer -n require phing/phing \
     && mkdir -p /tools/terminus \
     && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
@@ -65,7 +68,13 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && curl --silent --show-error https://platform.sh/cli/installer | php \
     && mv ${HOME}/.platformsh /tools/platformsh \
     && ln -s /tools/platformsh/bin/platform /usr/local/bin \
-    && chmod +x /scripts/build-tools-ci.sh
+    && chmod +x /scripts/build-tools-ci.sh \
+    && mkdir -p /tools/phpdocumentor \
+    && cd /tools/phpdocumentor \
+    && composer require phpdocumentor/phpdocumentor \
+    && mkdir -p /tools/codeception \
+    && cd /tools/codeception \
+    && composer require codeception/codeception
 
 RUN logfile="/version.txt" \
     && > $logfile \
