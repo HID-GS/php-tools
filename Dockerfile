@@ -48,14 +48,19 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer -n require drush/drush ^${DRUSH_VERSION} \
     && composer -n require drupal/coder \
     && /tools/drupal/vendor/bin/phpcs --config-set installed_paths /tools/drupal/vendor/drupal/coder/coder_sniffer \
+    && mkdir -p /tools/drupalconsole \
+    && cd /tools/drupalconsole \
+    && composer require drupal/console \
     && mkdir -p /tools/php \
     && cd /tools/php \
     && composer -n require phpmd/phpmd \
-    && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
-    && composer -n require phpunit/php-code-coverage \
     && composer -n require sebastian/phpcpd \
     && composer -n require phing/phing \
+    && mkdir -p /tools/phpunit \
+    && cd /tools/phpunit \
     && mkdir -p /tools/terminus \
+    && composer -n require phpunit/php-code-coverage ${PHPUNIT_CODE_COVERAGE_VERSION} \
+    && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
     && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
@@ -76,7 +81,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && mkdir -p /tools/codeception \
     && cd /tools/codeception \
     && composer require codeception/codeception \
-    && apk del .build-deps
+    && apk del .build-deps \
+    && mkdir -p /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll
 
 COPY phpcs-rules/DrupalAll-ruleset.xml /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll/ruleset.xml
 
@@ -85,15 +91,14 @@ RUN logfile="/version.txt" \
     && php --version | sed -ne 's/^\(PHP [^ ]\+\) .*/\1/gp' >> $logfile \
     && pecl list | tail -n +4 >> $logfile \
     && composer --version >> $logfile \
-    & --version --version  & composer global show >> $logfile \
     && /tools/drupal/vendor/bin/drush --version >> $logfile \
     && /tools/drupal/vendor/bin/phpcs --version >> $logfile \
     && /tools/drupal/vendor/bin/phpcs -i >> $logfile \
     && composer -d/tools/drupalconsole show | grep drupal | head -n 1 >> $logfile \
     && /tools/php/vendor/bin/phpmd --version >> $logfile \
     && /tools/php/vendor/bin/phing -v >> $logfile \
-    && /tools/php/vendor/bin/phpunit --version >> $logfile \
     && /tools/php/vendor/bin/phpcpd --version >> $logfile \
+    && /tools/phpunit/vendor/bin/phpunit --version >> $logfile \
     && /tools/phpdocumentor/vendor/bin/phpdoc --version >> $logfile \
     && /tools/codeception/vendor/bin/codecept --version >> $logfile \
     && terminus --version >> $logfile \
