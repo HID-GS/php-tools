@@ -9,32 +9,33 @@ ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 RUN apk add --no-cache wget ca-certificates \
     && wget -O /etc/apk/keys/phpearth.rsa.pub https://repos.php.earth/alpine/phpearth.rsa.pub \
     && echo "https://repos.php.earth/alpine/v3.7" >> /etc/apk/repositories \
-    && apk update && apk add --no-cache \
-    curl \
-    git \
-    openssh-client \
-    php7.2 \
-    php7.2-ctype \
-    php7.2-curl \
-    php7.2-dom \
-    php7.2-gd \
-    php7.2-iconv \
-    php7.2-json \
-    php7.2-mbstring \
-    php7.2-openssl \
-    php7.2-phar \
-    php7.2-pdo \
-    php7.2-pdo_mysql \
-    php7.2-pdo_sqlite \
-    php7.2-session \
-    php7.2-simplexml \
-    php7.2-sqlite3 \
-    php7.2-tokenizer \
-    php7.2-xdebug \
-    php7.2-xml \
-    php7.2-xmlwriter \
-    php7.2-zlib \
-    rsync \
+    && apk add --no-cache build-base autoconf --virtual .build-deps \
+    && apk add --no-cache \
+      curl \
+      git \
+      openssh-client \
+      php7 \
+      php7-ctype \
+      php7-curl \
+      php7-dom \
+      php7-gd \
+      php7-iconv \
+      php7-json \
+      php7-mbstring \
+      php7-openssl \
+      php7-phar \
+      php7-pdo \
+      php7-pdo_mysql \
+      php7-pdo_sqlite \
+      php7-session \
+      php7-simplexml \
+      php7-sqlite3 \
+      php7-tokenizer \
+      php7-xdebug \
+      php7-xml \
+      php7-xmlwriter \
+      php7-zlib \
+      rsync \
     && mkdir /composer \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -74,7 +75,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer require phpdocumentor/phpdocumentor \
     && mkdir -p /tools/codeception \
     && cd /tools/codeception \
-    && composer require codeception/codeception
+    && composer require codeception/codeception \
+    && apk del .build-deps
 
 RUN logfile="/version.txt" \
     && > $logfile \
