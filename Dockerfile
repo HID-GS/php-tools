@@ -6,31 +6,34 @@ ENV TERMINUS_PLUGINS_DIR /tools/terminus/plugins
 ENV TERMINUS_CACHE_DIR /tools/terminus/cache
 ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 
-RUN apk update && apk add --no-cache \
+RUN apk add --no-cache wget ca-certificates \
+    && wget -O /etc/apk/keys/phpearth.rsa.pub https://repos.php.earth/alpine/phpearth.rsa.pub \
+    && echo "https://repos.php.earth/alpine/v3.7" >> /etc/apk/repositories \
+    && apk update && apk add --no-cache \
     curl \
     git \
     openssh-client \
-    php7 \
-    php7-ctype \
-    php7-curl \
-    php7-dom \
-    php7-gd \
-    php7-iconv \
-    php7-json \
-    php7-mbstring \
-    php7-openssl \
-    php7-phar \
-    php7-pdo \
-    php7-pdo_mysql \
-    php7-pdo_sqlite \
-    php7-session \
-    php7-simplexml \
-    php7-sqlite3 \
-    php7-tokenizer \
-    php7-xdebug \
-    php7-xml \
-    php7-xmlwriter \
-    php7-zlib \
+    php7.2 \
+    php7.2-ctype \
+    php7.2-curl \
+    php7.2-dom \
+    php7.2-gd \
+    php7.2-iconv \
+    php7.2-json \
+    php7.2-mbstring \
+    php7.2-openssl \
+    php7.2-phar \
+    php7.2-pdo \
+    php7.2-pdo_mysql \
+    php7.2-pdo_sqlite \
+    php7.2-session \
+    php7.2-simplexml \
+    php7.2-sqlite3 \
+    php7.2-tokenizer \
+    php7.2-xdebug \
+    php7.2-xml \
+    php7.2-xmlwriter \
+    php7.2-zlib \
     rsync \
     && mkdir /composer \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
