@@ -1,6 +1,7 @@
 FROM alpine:3.7
 
 ENV PHPUNIT_VERSION 6.5.0
+ENV PHPUNIT_CODE_COVERAGE_VERSION ~5
 ENV DRUSH_VERSION 8.0.0
 ENV TERMINUS_PLUGINS_DIR /tools/terminus/plugins
 ENV TERMINUS_CACHE_DIR /tools/terminus/cache
@@ -58,9 +59,9 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer -n require phing/phing \
     && mkdir -p /tools/phpunit \
     && cd /tools/phpunit \
-    && mkdir -p /tools/terminus \
     && composer -n require phpunit/php-code-coverage ${PHPUNIT_CODE_COVERAGE_VERSION} \
     && composer -n require phpunit/phpunit ^${PHPUNIT_VERSION} \
+    && mkdir -p /tools/terminus \
     && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
