@@ -68,6 +68,7 @@ RUN apk add --no-cache wget ca-certificates \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY ./build-tools-ci.sh /scripts/
+COPY ./version /usr/local/bin/
 
 RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer -n global require -n hirak/prestissimo:^0.3 \
@@ -103,6 +104,7 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && mv ${HOME}/.platformsh /tools/platformsh \
     && ln -s /tools/platformsh/bin/platform /usr/local/bin \
     && chmod +x /scripts/build-tools-ci.sh \
+    && chmod +x /usr/local/bin/version \
     && mkdir -p /tools/phpdocumentor \
     && cd /tools/phpdocumentor \
     && composer require phpdocumentor/phpdocumentor \
