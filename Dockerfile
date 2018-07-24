@@ -116,6 +116,9 @@ COPY phpcs-rules/DrupalAll-ruleset.xml /tools/drupal/vendor/drupal/coder/coder_s
 
 RUN logfile="/version.txt" \
     && > $logfile \
+    && echo "" >> $logfile \
+    && echo "build timestamp: $(date)" >> $logfile \
+    && echo "" >> $logfile \
     && php --version | sed -ne 's/^\(PHP [^ ]\+\) .*/\1/gp' >> $logfile \
     && pecl list | tail -n +4 >> $logfile \
     && composer --version >> $logfile \
