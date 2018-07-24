@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 
 ENV PHPUNIT_VERSION 6.5.0
 ENV PHPUNIT_CODE_COVERAGE_VERSION ~5
@@ -9,7 +9,7 @@ ENV SIMPLETEST_DB sqlite://tmp/site.sqlite
 
 RUN apk add --no-cache wget ca-certificates \
     && wget -O /etc/apk/keys/phpearth.rsa.pub https://repos.php.earth/alpine/phpearth.rsa.pub \
-    && echo "https://repos.php.earth/alpine/v3.7" >> /etc/apk/repositories \
+    && echo "https://repos.php.earth/alpine/v3.8" >> /etc/apk/repositories \
     && apk add --no-cache build-base autoconf --virtual .build-deps \
     && apk add --no-cache \
       curl \
