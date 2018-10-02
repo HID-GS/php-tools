@@ -12,6 +12,7 @@ RUN apk add --no-cache wget ca-certificates \
     && echo "https://repos.php.earth/alpine/v3.8" >> /etc/apk/repositories \
     && apk add --no-cache build-base autoconf --virtual .build-deps \
     && apk add --no-cache \
+      bash \
       curl \
       git \
       openssh-client \
