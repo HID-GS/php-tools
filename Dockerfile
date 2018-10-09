@@ -118,6 +118,8 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && apk del .build-deps \
     && mkdir -p /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll
 
+RUN sed -i 's/^memory_limit = 128M/memory_limit = 1024M/g' /etc/php/7.2/php.ini
+
 COPY phpcs-rules/DrupalAll-ruleset.xml /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll/ruleset.xml
 
 RUN logfile="/version.txt" \
