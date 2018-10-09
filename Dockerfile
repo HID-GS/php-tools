@@ -15,6 +15,8 @@ RUN apk add --no-cache wget ca-certificates \
       bash \
       curl \
       git \
+      mariadb-dev \
+      mariadb-client \
       openssh-client \
       php7.2 \
       php7.2-fpm \
@@ -46,6 +48,7 @@ RUN apk add --no-cache wget ca-certificates \
       php7.2-pear \
       php7.2-phar \
       php7.2-posix \
+      php7.2-redis \
       php7.2-session \
       php7.2-shmop \
       php7.2-simplexml \
