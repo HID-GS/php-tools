@@ -29,6 +29,7 @@ RUN apk add --no-cache wget ca-certificates \
       php7.2-dba \
       php7.2-dom \
       php7.2-exif \
+      php7.2-fileinfo \
       php7.2-gd \
       php7.2-gettext \
       php7.2-gmp \
