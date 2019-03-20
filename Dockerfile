@@ -112,6 +112,7 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && chmod +x /usr/local/bin/version \
     && mkdir -p /tools/phpdocumentor \
     && cd /tools/phpdocumentor \
+    && composer require jms/serializer:1.7.* \
     && composer require phpdocumentor/phpdocumentor \
     && mkdir -p /tools/codeception \
     && cd /tools/codeception \
