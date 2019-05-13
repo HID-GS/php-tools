@@ -97,7 +97,7 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && mkdir -p /tools/terminus \
     && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
-    && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~1 \
+    && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:~2 \
     && ls /tools/ | while read tool; do \
          ls /tools/$tool/vendor/bin/ | while read binary; do \
            rm -f /usr/local/bin/$binary; \
