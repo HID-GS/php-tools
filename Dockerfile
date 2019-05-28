@@ -18,6 +18,7 @@ RUN apk add --no-cache wget ca-certificates \
       mariadb-dev \
       mariadb-client \
       openssh-client \
+      patch \
       php7.2 \
       php7.2-fpm \
       php7.2-opcache \
