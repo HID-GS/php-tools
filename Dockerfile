@@ -99,6 +99,11 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && cd /tools/terminus \
     && composer -n require pantheon-systems/terminus \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:^2.0.0-beta13 \
+    && mkdir -p /tools/phpstan \
+    && cd /tools/phpstan \
+    && composer require mglaman/phpstan-drupal \
+    && composer require phpstan/phpstan-deprecation-rules \
+    && composer require phpstan/extension-installer \
     && ls /tools/ | while read tool; do \
          ls /tools/$tool/vendor/bin/ | while read binary; do \
            rm -f /usr/local/bin/$binary; \
@@ -143,6 +148,7 @@ RUN logfile="/version.txt" \
     && /tools/phpunit/vendor/bin/phpunit --version >> $logfile \
     && /tools/phpdocumentor/vendor/bin/phpdoc --version >> $logfile \
     && /tools/codeception/vendor/bin/codecept --version >> $logfile \
+    && /tools/phpstan/vendor/bin/phpstan --version >> $logfile \
     && terminus --version >> $logfile \
     && platform --version >> $logfile
 
