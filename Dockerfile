@@ -101,6 +101,7 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && composer create-project -n -d ${TERMINUS_PLUGINS_DIR} pantheon-systems/terminus-build-tools-plugin:^2.0.0-beta13 \
     && mkdir -p /tools/phpstan \
     && cd /tools/phpstan \
+    && composer require mavimo/phpstan-junit \
     && composer require mglaman/phpstan-drupal \
     && composer require phpstan/phpstan-deprecation-rules \
     && composer require phpstan/extension-installer \
