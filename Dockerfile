@@ -19,56 +19,55 @@ RUN apk add --no-cache wget ca-certificates \
       mariadb-client \
       openssh-client \
       patch \
-      php7.2 \
-      php7.2-fpm \
-      php7.2-opcache \
-      php7.2-curl \
-      php7.2-bcmath \
-      php7.2-bz2 \
-      php7.2-calendar \
-      php7.2-ctype \
-      php7.2-dba \
-      php7.2-dom \
-      php7.2-exif \
-      php7.2-fileinfo \
-      php7.2-gd \
-      php7.2-gettext \
-      php7.2-gmp \
-      php7.2-iconv \
-      php7.2-json \
-      php7.2-ldap \
-      php7.2-mbstring \
-      php7.2-mcrypt \
-      php7.2-memcached \
-      php7.2-mysqli \
-      php7.2-mysqlnd \
-      php7.2-openssl \
-      php7.2-pcntl \
-      php7.2-pdo \
-      php7.2-pdo_mysql \
-      php7.2-pdo_sqlite \
-      php7.2-pear \
-      php7.2-phar \
-      php7.2-posix \
-      php7.2-redis \
-      php7.2-session \
-      php7.2-shmop \
-      php7.2-simplexml \
-      php7.2-soap \
-      php7.2-sockets \
-      php7.2-sqlite3 \
-      php7.2-sysvmsg \
-      php7.2-sysvsem \
-      php7.2-sysvshm \
-      php7.2-tokenizer \
-      php7.2-wddx \
-      php7.2-xdebug \
-      php7.2-xml \
-      php7.2-xmlreader \
-      php7.2-xmlwriter \
-      php7.2-xsl \
-      php7.2-zip \
-      php7.2-zlib \
+      php7.3 \
+      php7.3-fpm \
+      php7.3-opcache \
+      php7.3-curl \
+      php7.3-bcmath \
+      php7.3-bz2 \
+      php7.3-calendar \
+      php7.3-ctype \
+      php7.3-dba \
+      php7.3-dom \
+      php7.3-exif \
+      php7.3-fileinfo \
+      php7.3-gd \
+      php7.3-gettext \
+      php7.3-gmp \
+      php7.3-iconv \
+      php7.3-json \
+      php7.3-ldap \
+      php7.3-mbstring \
+      php7.3-memcached \
+      php7.3-mysqli \
+      php7.3-mysqlnd \
+      php7.3-openssl \
+      php7.3-pcntl \
+      php7.3-pdo \
+      php7.3-pdo_mysql \
+      php7.3-pdo_sqlite \
+      php7.3-pear \
+      php7.3-phar \
+      php7.3-posix \
+      php7.3-redis \
+      php7.3-session \
+      php7.3-shmop \
+      php7.3-simplexml \
+      php7.3-soap \
+      php7.3-sockets \
+      php7.3-sqlite3 \
+      php7.3-sysvmsg \
+      php7.3-sysvsem \
+      php7.3-sysvshm \
+      php7.3-tokenizer \
+      php7.3-wddx \
+      php7.3-xdebug \
+      php7.3-xml \
+      php7.3-xmlreader \
+      php7.3-xmlwriter \
+      php7.3-xsl \
+      php7.3-zip \
+      php7.3-zlib \
       rsync \
     && mkdir /composer \
     && curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -127,7 +126,7 @@ RUN mkdir -p ${TERMINUS_PLUGINS_DIR} ${TERMINUS_CACHE_DIR} \
     && apk del .build-deps \
     && mkdir -p /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll
 
-RUN sed -i 's/^memory_limit = 128M/memory_limit = 1024M/g' /etc/php/7.2/php.ini
+RUN sed -i 's/^memory_limit = 128M/memory_limit = 1024M/g' /etc/php/7.3/php.ini
 
 COPY phpcs-rules/DrupalAll-ruleset.xml /tools/drupal/vendor/drupal/coder/coder_sniffer/DrupalAll/ruleset.xml
 
